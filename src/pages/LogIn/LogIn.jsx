@@ -1,18 +1,36 @@
 import { Link } from "react-router-dom";
 import img from "../../../src/assets/images/login/login.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../hooks/provide/AuthProvider";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LogIn = () => {
+  const { signInUser } = useContext(AuthContext);
+
   const handleLogIn = (event) => {
     event.preventDefault();
     const form = event.target;
 
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+
+    signInUser(email, password)
+      .then(() => {
+        toast("login success!", { type: "success" });
+        form.reset();
+      })
+      .catch(() => {
+        toast("something wrong", { type: "error" });
+        form.reset();
+      });
+
+   
   };
   return (
     <div className="hero min-h-[70vh] bg-base-200 py-20">
       <div className="w-11/12 mx-auto">
+        <ToastContainer />
         <div className="flex flex-col lg:flex-row w-full justify-center">
           <div className="hidden lg:block lg:w-1/2">
             <img src={img} alt="" />
@@ -52,7 +70,12 @@ const LogIn = () => {
                 />
               </div>
             </form>
-            <p className="text-center mb-3">Do not have an account? <Link to='/register' className="text-orange-400">register now!</Link> </p>
+            <p className="text-center mb-3">
+              Do not have an account?{" "}
+              <Link to="/register" className="text-orange-400">
+                register now!
+              </Link>{" "}
+            </p>
           </div>
         </div>
       </div>
