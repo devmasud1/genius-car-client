@@ -24,7 +24,20 @@ const CheckOut = () => {
       price: price,
     };
 
-    console.log(booking);
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          alert("successfully service book!");
+        }
+      });
   };
   return (
     <div className="w-11/12 mx-auto my-20 lg:my-28 min-h-[50vh]">

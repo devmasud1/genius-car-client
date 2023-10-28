@@ -5,34 +5,38 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import LogIn from "../pages/logIn/logIn";
 import Register from "../pages/Register/Register";
 import CheckOut from "../pages/checkOut/checkOut";
-
-
+import Booking from "../pages/Booking/Booking";
 
 const Routes = createBrowserRouter([
-    {
-        path: '/',
-        element: <Layout></Layout>,
-        errorElement: <ErrorPage></ErrorPage>,
-        children: [
-            {
-                path: '/',
-                element: <Home></Home>
-            },
-            {
-                path: '/logIn',
-                element: <LogIn/>
-            },
-            {
-                path: '/register',
-                element: <Register></Register>
-            },
-            {
-                path: 'services/:id',
-                element:<CheckOut></CheckOut>,
-                loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
-            }
-        ]
-    }
-])
+  {
+    path: "/",
+    element: <Layout></Layout>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/logIn",
+        element: <LogIn />,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/services/:id",
+        element: <CheckOut></CheckOut>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/services/${params.id}`),
+      },
+      {
+        path: "/booking",
+        element: <Booking></Booking>,
+      },
+    ],
+  },
+]);
 
 export default Routes;
