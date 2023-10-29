@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../../src/assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../hooks/provide/AuthProvider";
@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const LogIn = () => {
   const { signInUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogIn = (event) => {
     event.preventDefault();
@@ -19,13 +21,12 @@ const LogIn = () => {
       .then(() => {
         toast("login success!", { type: "success" });
         form.reset();
+        navigate(location?.state ? location?.state : "/");
       })
       .catch(() => {
         toast("something wrong", { type: "error" });
         form.reset();
       });
-
-   
   };
   return (
     <div className="hero min-h-[70vh] bg-base-200 py-20">

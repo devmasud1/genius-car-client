@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../../src/assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../hooks/provide/AuthProvider";
@@ -7,26 +7,29 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleRegister = (event) => {
     event.preventDefault();
     const form = event.target;
-  
+
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-  
+
     createUser(email, password, name)
       .then(() => {
         toast("User successfully created!", { type: "success" });
         form.reset();
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         toast(error.message || "An error occurred", { type: "error" });
         form.reset();
       });
   };
-  
+
   return (
     <div className="hero min-h-[70vh] bg-base-200 py-20">
       <div className="w-11/12 mx-auto">
