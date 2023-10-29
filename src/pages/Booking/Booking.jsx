@@ -5,16 +5,30 @@ import BookingTable from "./BookingTable";
 const Booking = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-  
+
   const url = `http://localhost:5000/booking?email=${user?.email}`;
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => setBookings(data));
-  }, []);
+  }, [setBookings, url]);
 
   const handleBookingConfirm = () => {};
-  const handleDelete = () => {};
+
+  const handleDelete = (id) => {
+
+    fetch(`http://localhost:5000/booking/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          alert("delete booking item!");
+          const remaining = bookings.filter((booking) => booking._id !== id);
+          setBookings(remaining);
+        }
+      });
+  };
   return (
     <div className="w-11/12 mx-auto min-h-[70vh] mt-10">
       <h2 className="text-5xl">Your bookings: {bookings.length}</h2>
