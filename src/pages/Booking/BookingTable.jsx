@@ -35,13 +35,13 @@ const BookingTable = ({ book, handleDelete, handleBookingConfirm }) => {
       <td>${price}</td>
       <th>
         {status === "confirm" ? (
-          <span className="font-bold text-primary">Confirmed</span>
+          <button className="btn btn-success btn-sm">Approved</button>
         ) : (
           <button
             onClick={() => handleBookingConfirm(_id)}
-            className="btn btn-ghost btn-xs"
+            className="btn btn-warning btn-sm"
           >
-            Please Confirm
+            Pending
           </button>
         )}
       </th>
